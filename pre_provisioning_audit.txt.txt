@@ -1,0 +1,95 @@
+=== AUDIT START ===
+Date: Thu Jun 25 07:10:25 EAT 2026
+
+=== Users ===
+kk-api:x:999:1001::/home/kk-api:/usr/sbin/nologin
+kk-payments:x:997:1001::/home/kk-payments:/usr/sbin/nologin
+kk-logs:x:994:1001::/home/kk-logs:/usr/sbin/nologin
+
+=== Group ===
+kijanikiosk:x:1001:
+
+=== Directory listing ===
+total 20
+drwxr-xr-x 5 root root 4096 Jun 25 07:09 .
+drwxr-xr-x 4 root root 4096 Jun 25 07:09 ..
+drwxrwxrwx 2 root root 4096 Jun 25 07:09 config
+drwxr-xr-x 2 root root 4096 Jun 25 07:09 health
+drwxr-xr-x 3 root root 4096 Jun 25 07:09 shared
+
+=== ACL shared/logs ===
+(no output — ACLs not yet set on shared/logs)
+
+=== ACL config ===
+(no output — ACLs not yet set on config)
+
+=== UFW Status ===
+(ufw not available in WSL environment)
+
+=== Package holds ===
+curl
+
+=== systemd kk- units ===
+(no kk-*.service units exist yet)
+
+=== Journal disk usage ===
+Archived and active journals take up 464.4M in the file system.
+
+=== AUDIT END ===
+
+=======================================================
+INTERPRETATION: Dirty State Conditions Found
+=======================================================
+
+The following conditions were identified before running the provisioning script.
+Each is explicitly handled in the script rather than silently ignored.
+
+1. SERVICE ACCOUNTS ALREADY EXIST (kk-api UID 999, kk-payments UID 997, kk-logs UID 994)
+   Condition: All three service accounts were created manually during Tuesday's lab.
+   Risk: UIDs differ from what a fresh provisioning run would assign. Shell or
+         group membership may differ from spec.
+   Handling (Phase 2): Script checks via `id` before attempting useradd.
+   If user exists, usermod is run to enforce correct shell and primary group.
+   Log line: "Already exists: kk-api (UID 999)"
+
+2. GROUP ALREADY EXISTS (kijanikiosk GID 1001)
+   Condition: Group was created during Tuesday's lab.
+   Risk: Group membership may have drifted.
+   Handling (Phase 2): Script checks via `getent group` before groupadd.
+   Log line: "Already exists: group kijanikiosk"
+
+3. /opt/kijanikiosk/config HAS PERMISSIONS 777 (world-writable)
+   Condition: chmod 777 was applied to simulate dirty state from a lab mishap.
+   Risk: Any user on the system can read or overwrite service configuration,
+         including environment files containing secrets.
+   Handling (Phase 3): Script explicitly sets chmod 750 and chown root:kijanikiosk.
+   Log line: "Fixed: config directory permissions 777 -> 750"
+
+4. /opt/kijanikiosk/shared/logs HAS NO ACLs
+   Condition: ACLs were not set — directory exists but access model is incomplete.
+   Risk: kk-api cannot write logs, kk-payments cannot read for audit correlation.
+   Handling (Phase 3): setfacl applies full ACL model including default ACLs
+   so files created by logrotate inherit correct permissions automatically.
+   Log line: "ACLs applied to shared/logs with default ACLs for logrotate compatibility"
+
+5. curl IS ON APT HOLD
+   Condition: apt-mark hold curl was set during dirty state simulation.
+   Risk: If provisioning script tries to install or update curl it will fail silently
+         or error depending on version mismatch.
+   Handling (Phase 1): Script runs apt-mark unhold curl before any install attempt,
+   then re-pins at the currently installed version.
+   Log line: "Removing any existing package holds to allow pinning..."
+
+6. JOURNAL ALREADY USING 464.4MB (close to 500MB cap)
+   Condition: Journal has accumulated logs across the week and is approaching the
+   limit we intend to set.
+   Risk: Setting SystemMaxUse=500M when current usage is 464MB means very little
+   headroom. Journald will begin vacuuming old logs almost immediately.
+   Handling (Phase 7): Cap is set at 500MB as required. The near-capacity state
+   is documented here so the operations team knows to expect immediate vacuuming.
+   This is the correct behaviour — the cap enforces the policy.
+   Log line: "Journal persistence configured: persistent storage, 500MB cap"
+
+NO kk-*.service UNIT FILES EXIST
+   Condition: No systemd units from previous labs.
+   Handling (Phase 4): All three unit files are written fresh — no conflict.

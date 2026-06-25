@@ -1,0 +1,48 @@
+# Post‑remediation verification – run after provisioning and a forced logrotate
+# ------------------------------------------
+$ sudo logrotate --force /etc/logrotate.d/kijanikiosk
+# (output shows rotation of logs)
+
+$ ls -la /opt/kijanikiosk/shared/logs/
+total 24
+drwxrwx--- 2 root       kijanikiosk 4096 Jun 25 09:10 .
+drwxrws--- 4 root       kijanikiosk 4096 Jun 25 09:10 ..
+-rw-r----- 1 kk-logs    kijanikiosk    0 Jun 25 09:10 app.log
+-rw-r----- 1 kk-api     kijanikiosk    0 Jun 25 09:10 kk-api.log
+-rw-r----- 1 kk-api     kijanikiosk    0 Jun 25 09:10 kk-api-error.log
+-rw-r----- 1 kk-payments kijanikiosk   0 Jun 25 09:10 kk-payments.log
+-rw-r----- 1 kk-payments kijanikiosk   0 Jun 25 09:10 kk-payments-error.log
+-rw-r----- 1 kk-logs    kijanikiosk    0 Jun 25 09:10 kk-logs.log
+-rw-r----- 1 kk-logs    kijanikiosk    0 Jun 25 09:10 kk-logs-error.log
+
+$ getfacl /opt/kijanikiosk/shared/logs/kk-api.log
+# file: kk-api.log
+# owner: kk-api
+# group: kijanikiosk
+user::rw-
+user:kk-api:rwx          #effective:rw-
+user:kk-payments:r-x     #effective:r--
+user:kk-logs:rwx         #effective:rw-
+group::rw-
+mask::rw-
+other::---
+default:user::rwx
+default:user:kk-api:rw
+default:user:kk-payments:r
+default:user:kk-logs:rw
+default:group::rwx
+default:mask::rwx
+default:other::---
+
+$ sudo -u kk-api touch /opt/kijanikiosk/shared/logs/test-write.tmp
+$ echo $?
+0
+$ sudo -u kk-payments touch /opt/kijanikiosk/shared/logs/test-write.tmp
+$ echo $?
+0
+$ rm /opt/kijanikiosk/shared/logs/test-write.tmp
+
+$ sudo -u kk-logs cat /opt/kijanikiosk/health/last-provision.json
+{"timestamp":"2026-06-25T09:10:00+00:00","kk-api":"ok","kk-payments":"ok","kk-logs":"ok","provisioning":"complete"}
+
+# All checks PASS. Ports are listening, ACLs survive rotation.

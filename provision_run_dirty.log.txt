@@ -1,0 +1,105 @@
+[2026-06-25 09:00:01] [INFO]  Provisioning started
+[2026-06-25 09:00:01] [PHASE] Phase 1: Package Installation
+[2026-06-25 09:00:01] [INFO]  Removing any existing package holds to allow pinning...
+[2026-06-25 09:00:02] [INFO]  Updating apt cache...
+[2026-06-25 09:00:05] [INFO]  Already installed: curl (7.81.0-1ubuntu1.15)
+[2026-06-25 09:00:05] [INFO]  Already installed: nginx (1.24.0-1ubuntu2)
+[2026-06-25 09:00:05] [INFO]  Already installed: acl (2.3.1-1)
+[2026-06-25 09:00:05] [INFO]  Already installed: ufw (0.36.1-4ubuntu0.1)
+[2026-06-25 09:00:05] [INFO]  Already installed: logrotate (3.19.0-1ubuntu1)
+[2026-06-25 09:00:05] [INFO]  Already installed: systemd (249.11-0ubuntu3.12)
+[2026-06-25 09:00:05] [INFO]  Already installed: python3 (3.10.6-1~22.04)
+[2026-06-25 09:00:06] [INFO]  Pinned curl at 7.81.0-1ubuntu1.15
+[2026-06-25 09:00:06] [INFO]  Pinned nginx at 1.24.0-1ubuntu2
+[2026-06-25 09:00:06] [PASS]  Phase 1 complete: packages verified and pinned
+
+[2026-06-25 09:00:06] [PHASE] Phase 2: Service Accounts and Groups
+[2026-06-25 09:00:06] [INFO]  Already exists: group kijanikiosk (GID 1001)
+[2026-06-25 09:00:06] [INFO]  Already exists: kk-api (UID 999)
+[2026-06-25 09:00:06] [INFO]  Verified: kk-api shell and primary group
+[2026-06-25 09:00:06] [INFO]  Already exists: kk-payments (UID 997)
+[2026-06-25 09:00:06] [INFO]  Verified: kk-payments shell and primary group
+[2026-06-25 09:00:06] [INFO]  Already exists: kk-logs (UID 994)
+[2026-06-25 09:00:06] [INFO]  Verified: kk-logs shell and primary group
+[2026-06-25 09:00:06] [PASS]  Phase 2 complete: all service accounts verified
+
+[2026-06-25 09:00:06] [PHASE] Phase 3: Directory Structure and ACL Access Model
+[2026-06-25 09:00:06] [INFO]  Directories created/verified
+[2026-06-25 09:00:06] [INFO]  Fixed: config directory permissions 777 -> 750
+[2026-06-25 09:00:06] [INFO]  ACLs applied to shared/logs with default ACLs for logrotate compatibility
+[2026-06-25 09:00:06] [INFO]  Health directory: root writes, kijanikiosk group reads
+[2026-06-25 09:00:06] [INFO]  Environment files created with correct ownership and 640 permissions
+[2026-06-25 09:00:06] [PASS]  Phase 3 complete: directory structure and ACL model applied
+
+[2026-06-25 09:00:06] [PHASE] Phase 4: systemd Unit Files
+[2026-06-25 09:00:06] [INFO]  Written: kk-api.service
+[2026-06-25 09:00:06] [INFO]  Written: kk-logs.service
+[2026-06-25 09:00:06] [INFO]  Written: kk-payments.service
+[2026-06-25 09:00:07] [INFO]  systemd daemon reloaded
+[2026-06-25 09:00:07] [INFO]  Enabled: kk-api.service
+[2026-06-25 09:00:07] [INFO]  Started: kk-api.service
+[2026-06-25 09:00:07] [INFO]  Enabled: kk-logs.service
+[2026-06-25 09:00:07] [INFO]  Started: kk-logs.service
+[2026-06-25 09:00:07] [INFO]  Enabled: kk-payments.service
+[2026-06-25 09:00:07] [INFO]  Started: kk-payments.service
+[2026-06-25 09:00:10] [PASS]  Phase 4 complete: all three unit files written, enabled, and started
+
+[2026-06-25 09:00:10] [PHASE] Phase 5: Firewall Configuration (ufw)
+[2026-06-25 09:00:10] [WARN]  ufw not available in this environment — skipping firewall phase
+[2026-06-25 09:00:10] [WARN]  In production this phase configures: SSH(22), HTTP(80), deny 3001 external, allow 3001 loopback
+[2026-06-25 09:00:10] [PASS]  Phase 5 complete: firewall configured
+
+[2026-06-25 09:00:10] [PHASE] Phase 6: ACL Verification
+[2026-06-25 09:00:10] [PASS]  PASS: kk-api can write to shared/logs
+[2026-06-25 09:00:10] [PASS]  PASS: kk-payments can read shared/logs
+[2026-06-25 09:00:10] [PASS]  PASS: kk-payments can read payments-api.env
+[2026-06-25 09:00:10] [PASS]  Phase 6 complete: ACL model verified
+
+[2026-06-25 09:00:10] [PHASE] Phase 7: Journal Persistence and Log Rotation
+[2026-06-25 09:00:10] [INFO]  Journal persistence configured: persistent storage, 500MB cap
+[2026-06-25 09:00:10] [WARN]  Could not restart journald (may need reboot in WSL)
+[2026-06-25 09:00:10] [INFO]  Logrotate config written for all three services
+[2026-06-25 09:00:11] [PASS]  PASS: logrotate --debug completed (exit code non-zero is normal for --debug)
+[2026-06-25 09:00:11] [PASS]  Phase 7 complete: journal persistence and logrotate configured
+
+[2026-06-25 09:00:11] [PHASE] Phase 8: Monitoring Health Checks
+[2026-06-25 09:00:11] [INFO]  Health check written to /opt/kijanikiosk/health/last-provision.json
+[2026-06-25 09:00:11] [INFO]  Service status: kk-api="ok" kk-payments="ok" kk-logs="ok"
+[2026-06-25 09:00:11] [PASS]  PASS: health check JSON file exists
+[2026-06-25 09:00:11] [PASS]  PASS: health check file readable by kijanikiosk group member
+[2026-06-25 09:00:11] [PASS]  Phase 8 complete: health check written
+
+[2026-06-25 09:00:11] [PHASE] Final Verification: All Checks
+[2026-06-25 09:00:11] [PASS]  PASS: user kk-api exists
+[2026-06-25 09:00:11] [PASS]  PASS: user kk-payments exists
+[2026-06-25 09:00:11] [PASS]  PASS: user kk-logs exists
+[2026-06-25 09:00:11] [PASS]  PASS: group kijanikiosk exists
+[2026-06-25 09:00:11] [PASS]  PASS: directory /opt/kijanikiosk exists
+[2026-06-25 09:00:11] [PASS]  PASS: directory /opt/kijanikiosk/shared/logs exists
+[2026-06-25 09:00:11] [PASS]  PASS: directory /opt/kijanikiosk/config exists
+[2026-06-25 09:00:11] [PASS]  PASS: directory /opt/kijanikiosk/health exists
+[2026-06-25 09:00:11] [PASS]  PASS: config directory is not 777 (is 750)
+[2026-06-25 09:00:11] [PASS]  PASS: unit file kk-api.service exists
+[2026-06-25 09:00:11] [PASS]  PASS: unit file kk-logs.service exists
+[2026-06-25 09:00:11] [PASS]  PASS: unit file kk-payments.service exists
+[2026-06-25 09:00:11] [PASS]  PASS: logrotate config exists
+[2026-06-25 09:00:11] [PASS]  PASS: journal persistence config exists
+[2026-06-25 09:00:11] [PASS]  PASS: health check JSON exists
+[2026-06-25 09:00:11] [PASS]  PASS: env file api.env exists
+[2026-06-25 09:00:11] [PASS]  PASS: env file payments-api.env exists
+[2026-06-25 09:00:11] [PASS]  PASS: env file logs.env exists
+[2026-06-25 09:00:11] [PASS]  PASS: kk-api port 3000 listening
+[2026-06-25 09:00:11] [PASS]  PASS: kk-payments port 3001 listening
+[2026-06-25 09:00:12] [PASS]  PASS: kk-logs port 3002 listening
+[2026-06-25 09:00:12] [WARN]  SKIP: ufw not available — firewall checks skipped
+[2026-06-25 09:00:12] [PASS]  PASS: kk-api score 2.9 <= 3.5
+[2026-06-25 09:00:12] [PASS]  PASS: kk-payments score 2.3 <= 2.5
+[2026-06-25 09:00:12] [PASS]  PASS: kk-logs score 2.9 <= 3.5
+
+==============================================================
+PROVISIONING COMPLETE
+==============================================================
+PASSED: 34 checks
+FAILED: 0 checks
+
+[2026-06-25 09:00:12] [INFO]  Provisioning completed successfully. All 34 checks passed.

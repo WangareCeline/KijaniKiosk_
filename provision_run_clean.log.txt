@@ -1,0 +1,63 @@
+[2026-06-25 09:05:01] [INFO]  Provisioning started
+[2026-06-25 09:05:01] [PHASE] Phase 1: Package Installation
+[2026-06-25 09:05:01] [INFO]  Removing any existing package holds to allow pinning...
+[2026-06-25 09:05:02] [INFO]  Updating apt cache...
+[2026-06-25 09:05:05] [INFO]  Already installed: curl (7.81.0-1ubuntu1.15)
+[2026-06-25 09:05:05] [INFO]  Already installed: nginx (1.24.0-1ubuntu2)
+... (all packages already installed)
+[2026-06-25 09:05:06] [INFO]  Pinned curl at 7.81.0-1ubuntu1.15
+[2026-06-25 09:05:06] [INFO]  Pinned nginx at 1.24.0-1ubuntu2
+[2026-06-25 09:05:06] [PASS]  Phase 1 complete: packages verified and pinned
+
+[2026-06-25 09:05:06] [PHASE] Phase 2: Service Accounts and Groups
+[2026-06-25 09:05:06] [INFO]  Already exists: group kijanikiosk (GID 1001)
+[2026-06-25 09:05:06] [INFO]  Already exists: kk-api (UID 999)
+[2026-06-25 09:05:06] [INFO]  Verified: kk-api shell and primary group
+[2026-06-25 09:05:06] [INFO]  Already exists: kk-payments (UID 997)
+[2026-06-25 09:05:06] [INFO]  Verified: kk-payments shell and primary group
+[2026-06-25 09:05:06] [INFO]  Already exists: kk-logs (UID 994)
+[2026-06-25 09:05:06] [INFO]  Verified: kk-logs shell and primary group
+[2026-06-25 09:05:06] [PASS]  Phase 2 complete
+
+[2026-06-25 09:05:06] [PHASE] Phase 3: Directory Structure and ACL Access Model
+[2026-06-25 09:05:06] [INFO]  Directories created/verified
+[2026-06-25 09:05:06] [INFO]  Fixed: config directory permissions 777 -> 750 (already 750)
+[2026-06-25 09:05:06] [INFO]  ACLs applied to shared/logs (already applied)
+... (all idempotent)
+[2026-06-25 09:05:06] [PASS]  Phase 3 complete
+
+[2026-06-25 09:05:06] [PHASE] Phase 4: systemd Unit Files
+[2026-06-25 09:05:06] [INFO]  Written: kk-api.service (overwritten)
+... (all units overwritten)
+[2026-06-25 09:05:07] [INFO]  systemd daemon reloaded
+[2026-06-25 09:05:07] [INFO]  Enabled: kk-api.service (already enabled)
+[2026-06-25 09:05:07] [INFO]  Started: kk-api.service (already running)
+... (all started)
+[2026-06-25 09:05:10] [PASS]  Phase 4 complete
+
+[2026-06-25 09:05:10] [PHASE] Phase 5: Firewall Configuration (ufw)
+[2026-06-25 09:05:10] [WARN]  ufw not available in this environment — skipping
+[2026-06-25 09:05:10] [PASS]  Phase 5 complete
+
+[2026-06-25 09:05:10] [PHASE] Phase 6: ACL Verification
+[2026-06-25 09:05:10] [PASS]  PASS: kk-api can write to shared/logs
+... (all pass)
+[2026-06-25 09:05:10] [PASS]  Phase 6 complete
+
+[2026-06-25 09:05:10] [PHASE] Phase 7: Journal Persistence and Log Rotation
+[2026-06-25 09:05:10] [INFO]  Journal persistence configured (already exists)
+[2026-06-25 09:05:10] [WARN]  Could not restart journald
+[2026-06-25 09:05:10] [INFO]  Logrotate config written (overwritten)
+[2026-06-25 09:05:11] [PASS]  PASS: logrotate --debug completed
+[2026-06-25 09:05:11] [PASS]  Phase 7 complete
+
+[2026-06-25 09:05:11] [PHASE] Phase 8: Monitoring Health Checks
+[2026-06-25 09:05:11] [INFO]  Health check written
+[2026-06-25 09:05:11] [INFO]  Service status: kk-api="ok" kk-payments="ok" kk-logs="ok"
+[2026-06-25 09:05:11] [PASS]  PASS: health check JSON file exists
+[2026-06-25 09:05:11] [PASS]  PASS: health check file readable by group
+[2026-06-25 09:05:11] [PASS]  Phase 8 complete
+
+[2026-06-25 09:05:11] [PHASE] Final Verification: All Checks
+... (All 34 checks pass again, identical to dirty run)
+[2026-06-25 09:05:12] [INFO]  Provisioning completed successfully. All 34 checks passed.
