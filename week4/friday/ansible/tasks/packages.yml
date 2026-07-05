@@ -1,0 +1,17 @@
+---
+# Phase 1: Packages
+- name: Update apt cache
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install required packages
+  apt:
+    name:
+      - python3
+      - ufw
+      - logrotate
+      - acl
+      - nginx
+      - curl
+    state: present

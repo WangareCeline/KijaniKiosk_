@@ -1,0 +1,26 @@
+---
+# Phase 4: Systemd unit files
+- name: Deploy environment file
+  template:
+    src: service.env.j2
+    dest: "{{ kijanikiosk_config_dir }}/{{ env_file_name }}"
+    owner: root
+    group: "{{ kijanikiosk_group }}"
+    mode: "0640"
+  notify: restart service
+
+- name: Deploy systemd unit file
+  template:
+    src: kijanikiosk-service.j2
+    dest: "/etc/systemd/system/{{ service_name }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd and restart service
+
+- name: Enable and start the service
+  systemd:
+    name: "{{ service_name }}"
+    enabled: true
+    state: started
+    daemon_reload: true

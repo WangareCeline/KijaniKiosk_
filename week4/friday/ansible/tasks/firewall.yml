@@ -1,0 +1,65 @@
+---
+# Phase 5: Firewall rules
+# Reset to a clean baseline first - your Week 3 audit found a spurious
+# leftover deny rule from a previous session, so a full reset avoids
+# that class of drift entirely rather than trying to patch around it.
+- name: Reset ufw to defaults
+  community.general.ufw:
+    state: reset
+
+- name: Set default deny incoming, allow outgoing
+  community.general.ufw:
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
+  loop:
+    - { direction: incoming, policy: deny }
+    - { direction: outgoing, policy: allow }
+
+- name: Allow SSH
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+    comment: "SSH: administrative access"
+
+- name: Allow HTTP (nginx)
+  community.general.ufw:
+    rule: allow
+    port: "80"
+    proto: tcp
+    comment: "HTTP: public web traffic via nginx"
+
+# kk-payments is the only service with a port-specific rule: monitoring
+# subnet can health-check it, nginx can reach it over loopback, and
+# everyone else is explicitly denied. api and logs have no port rule at
+# all - they're unreachable externally by the default deny policy above.
+- name: Allow monitoring subnet to reach kk-payments health check
+  community.general.ufw:
+    rule: allow
+    port: "{{ service_port }}"
+    proto: tcp
+    src: "{{ monitoring_subnet_cidr }}"
+    comment: "Monitoring subnet: kk-payments health check"
+  when: needs_external_rule
+
+- name: Allow loopback on kk-payments port for nginx's internal proxy
+  community.general.ufw:
+    rule: allow
+    interface: lo
+    direction: in
+    port: "{{ service_port }}"
+    proto: tcp
+    comment: "Loopback: nginx internal proxy to kk-payments"
+  when: needs_external_rule
+
+- name: Explicitly deny external access to kk-payments port
+  community.general.ufw:
+    rule: deny
+    port: "{{ service_port }}"
+    proto: tcp
+    comment: "Block: kk-payments is internal only, not for public access"
+  when: needs_external_rule
+
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled

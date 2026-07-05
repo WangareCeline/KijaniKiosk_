@@ -1,0 +1,13 @@
+---
+# Phase 7: Logrotate
+- name: Deploy logrotate config for this service
+  template:
+    src: logrotate.j2
+    dest: "/etc/logrotate.d/{{ service_name }}"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Verify logrotate config syntax (idempotency-safe, does not rotate)
+  command: "logrotate --debug /etc/logrotate.d/{{ service_name }}"
+  changed_when: false

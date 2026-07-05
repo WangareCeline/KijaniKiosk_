@@ -1,0 +1,28 @@
+---
+- name: Provision and harden KijaniKiosk servers
+  hosts: kijanikiosk
+  become: true
+  handlers:
+    - import_tasks: handlers/main.yml
+
+  tasks:
+    - name: "Phase 1: Packages"
+      import_tasks: tasks/packages.yml
+
+    - name: "Phase 2: Service accounts"
+      import_tasks: tasks/service_accounts.yml
+
+    - name: "Phase 3: Directory structure"
+      import_tasks: tasks/directories.yml
+
+    - name: "Phase 4: Systemd unit files"
+      import_tasks: tasks/systemd.yml
+
+    - name: "Phase 5: Firewall rules"
+      import_tasks: tasks/firewall.yml
+
+    - name: "Phase 6: Journal persistence"
+      import_tasks: tasks/journald.yml
+
+    - name: "Phase 7: Logrotate"
+      import_tasks: tasks/logrotate.yml
