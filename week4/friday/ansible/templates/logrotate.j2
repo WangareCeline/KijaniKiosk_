@@ -1,0 +1,13 @@
+{{ kijanikiosk_shared_logs_dir }}/*.log {
+    su {{ service_user }} {{ kijanikiosk_group }}
+    daily
+    rotate 7
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 {{ service_user }} {{ kijanikiosk_group }}
+    postrotate
+        systemctl kill -s HUP {{ service_name }}.service || true
+    endscript
+}

@@ -1,0 +1,10 @@
+---
+service_name: kk-logs
+service_user: kk-logs
+service_port: 3002
+env_file_name: logs.env
+full_hardening: false
+needs_external_rule: false
+# kk-logs is the only service with ExecReload defined, so logrotate's
+# postrotate can HUP it to reopen file handles after rotation.
+needs_exec_reload: true

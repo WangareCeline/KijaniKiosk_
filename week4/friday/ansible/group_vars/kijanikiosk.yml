@@ -1,0 +1,23 @@
+---
+# Shared across api, payments, logs. Anything that differs per-server
+# goes in host_vars/<name>.yml instead - never hardcode per-host values here.
+
+ansible_user: ubuntu
+ansible_ssh_private_key_file: "~/.ssh/id_ed25519"
+ansible_python_interpreter: /usr/bin/python3
+
+kijanikiosk_base_dir: /opt/kijanikiosk
+kijanikiosk_config_dir: "{{ kijanikiosk_base_dir }}/config"
+kijanikiosk_shared_logs_dir: "{{ kijanikiosk_base_dir }}/shared/logs"
+kijanikiosk_health_dir: "{{ kijanikiosk_base_dir }}/health"
+
+kijanikiosk_group: kijanikiosk
+
+service_display_names:
+  kk-api: "API Service"
+  kk-payments: "Payments Service"
+  kk-logs: "Log Aggregation Service"
+
+# Monitoring subnet allowed to reach kk-payments only - matches the
+# exact CIDR from your Week 3 provisioning script's ufw rules.
+monitoring_subnet_cidr: "10.0.1.0/24"

@@ -1,0 +1,63 @@
+[Unit]
+Description=KijaniKiosk {{ service_display_names[service_name] }}
+Documentation=https://github.com/kijanikiosk/{{ service_name.split('-')[1] }}
+{% if service_name == 'kk-payments' %}
+After=network.target kk-api.service
+Wants=kk-api.service
+{% else %}
+After=network.target
+Wants=network.target
+{% endif %}
+
+[Service]
+Type=simple
+User={{ service_user }}
+Group={{ kijanikiosk_group }}
+EnvironmentFile={{ kijanikiosk_config_dir }}/{{ env_file_name }}
+ExecStart=/usr/bin/python3 -m http.server {{ service_port }}
+{% if needs_exec_reload %}
+# ExecReload lets logrotate's postrotate signal the process to reopen file handles
+ExecReload=/bin/kill -HUP $MAINPID
+{% endif %}
+Restart=on-failure
+RestartSec=5s
+StandardOutput=append:{{ kijanikiosk_shared_logs_dir }}/{{ service_name }}.log
+StandardError=append:{{ kijanikiosk_shared_logs_dir }}/{{ service_name }}-error.log
+
+# --- Baseline hardening (all three services) ---
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths={{ kijanikiosk_shared_logs_dir }}
+CapabilityBoundingSet=
+AmbientCapabilities=
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+{% if full_hardening %}
+
+# --- Extra hardening: kk-payments only (target < 2.5) ---
+PrivateUsers=true
+PrivateIPC=true
+ProtectKernelLogs=true
+ProtectClock=true
+ProtectHostname=true
+RestrictAddressFamilies=AF_INET AF_INET6
+LockPersonality=true
+MemoryDenyWriteExecute=true
+UMask=0077
+SecureBits=noroot noroot-locked
+SystemCallFilter=@system-service @network-io
+SystemCallFilter=~@privileged @resources @raw-io @reboot @swap @obsolete
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target

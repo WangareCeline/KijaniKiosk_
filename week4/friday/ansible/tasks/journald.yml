@@ -1,0 +1,16 @@
+---
+# Phase 6: Journal persistence
+- name: Ensure persistent journal directory exists
+  file:
+    path: /var/log/journal
+    state: directory
+    owner: root
+    group: systemd-journal
+    mode: "2755"
+
+- name: Set journald to persistent storage
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    regexp: '^#?Storage='
+    line: 'Storage=persistent'
+  notify: restart journald

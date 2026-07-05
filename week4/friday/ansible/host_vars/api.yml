@@ -1,0 +1,8 @@
+---
+service_name: kk-api
+service_user: kk-api
+service_port: 3000
+env_file_name: api.env
+full_hardening: false
+needs_external_rule: false
+needs_exec_reload: false

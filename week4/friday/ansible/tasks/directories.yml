@@ -1,0 +1,42 @@
+---
+# Phase 3: Directory structure
+- name: Create base kijanikiosk directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ service_user }}"
+    group: "{{ kijanikiosk_group }}"
+    mode: "0750"
+  loop:
+    - "{{ kijanikiosk_base_dir }}/{{ service_name }}"
+    - "{{ kijanikiosk_config_dir }}"
+    - "{{ kijanikiosk_health_dir }}"
+
+- name: Create shared logs directory
+  file:
+    path: "{{ kijanikiosk_shared_logs_dir }}"
+    state: directory
+    owner: "{{ service_user }}"
+    group: "{{ kijanikiosk_group }}"
+    mode: "0770"
+
+# Default ACL on the logs directory so files created by logrotate's
+# `create` directive inherit write access for the service user - this is
+# the "touch test" your post_remediation_verification.txt checks for.
+- name: Set default ACL on shared logs directory for service user
+  ansible.posix.acl:
+    path: "{{ kijanikiosk_shared_logs_dir }}"
+    entity: "{{ service_user }}"
+    etype: user
+    permissions: rwx
+    default: true
+    state: present
+
+- name: Set default ACL on shared logs directory for kijanikiosk group
+  ansible.posix.acl:
+    path: "{{ kijanikiosk_shared_logs_dir }}"
+    entity: "{{ kijanikiosk_group }}"
+    etype: group
+    permissions: rx
+    default: true
+    state: present
