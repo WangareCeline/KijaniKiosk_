@@ -1,9 +1,4 @@
-output "public_ip" {
-  description = "Public IP address of this server, used to build the Ansible inventory."
-  value       = aws_instance.this.public_ip
-}
-
-output "instance_id" {
-  description = "EC2 instance ID, useful for debugging and destroy verification."
-  value       = aws_instance.this.id
+output "name" {
+  description = "The Multipass instance name, e.g. kijanikiosk-api. pipeline.sh uses this with `multipass info` to get the real IP, since this provider's IP reporting isn't reliable enough to trust as a direct Terraform output."
+  value       = multipass_instance.this.name
 }

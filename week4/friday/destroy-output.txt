@@ -1,0 +1,87 @@
+[0m[1mlocal_file.cloud_init: Refreshing state... [id=1604c5eca6f48d9bd5ec628b5dc3052406041f98][0m
+[0m[1mmodule.servers["logs"].multipass_instance.this: Refreshing state... [name=kijanikiosk-logs][0m
+[0m[1mmodule.servers["payments"].multipass_instance.this: Refreshing state... [name=kijanikiosk-payments][0m
+[0m[1mmodule.servers["api"].multipass_instance.this: Refreshing state... [name=kijanikiosk-api][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # local_file.cloud_init[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "local_file" "cloud_init" {
+      [31m-[0m[0m content              = <<-EOT
+            #cloud-config
+            ssh_authorized_keys:
+              - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHx6QuiA3utwD6a+9ExUmx+Hw+x2EeV4nlZOA25xNtXr celinewangare837@gmail.com
+        EOT [90m-> null[0m[0m
+      [31m-[0m[0m content_base64sha256 = "+CLxtyyd91WjSfBqlXHEHSbucBuF3qMcuoUpHTHgvqU=" [90m-> null[0m[0m
+      [31m-[0m[0m content_base64sha512 = "yLApACloEqN1TYje2nyYGg7FrjDp9lykJ1sppbYI3H3mfmOLBfCBW+sOfJ7viKMjSkrKAPJnipKY6ydypikH+A==" [90m-> null[0m[0m
+      [31m-[0m[0m content_md5          = "b55864dc15561cb804c78c8e039a42cd" [90m-> null[0m[0m
+      [31m-[0m[0m content_sha1         = "1604c5eca6f48d9bd5ec628b5dc3052406041f98" [90m-> null[0m[0m
+      [31m-[0m[0m content_sha256       = "f822f1b72c9df755a349f06a9571c41d26ee701b85dea31cba85291d31e0bea5" [90m-> null[0m[0m
+      [31m-[0m[0m content_sha512       = "c8b02900296812a3754d88deda7c981a0ec5ae30e9f65ca4275b29a5b608dc7de67e638b05f0815beb0e7c9eef88a3234a4aca00f2678a9298eb2772a62907f8" [90m-> null[0m[0m
+      [31m-[0m[0m directory_permission = "0777" [90m-> null[0m[0m
+      [31m-[0m[0m file_permission      = "0777" [90m-> null[0m[0m
+      [31m-[0m[0m filename             = "./generated-cloud-init.yaml" [90m-> null[0m[0m
+      [31m-[0m[0m id                   = "1604c5eca6f48d9bd5ec628b5dc3052406041f98" [90m-> null[0m[0m
+    }
+
+[1m  # module.servers["api"].multipass_instance.this[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "multipass_instance" "this" {
+      [31m-[0m[0m cloudinit_file = "./generated-cloud-init.yaml" [90m-> null[0m[0m
+      [31m-[0m[0m cpus           = 1 [90m-> null[0m[0m
+      [31m-[0m[0m disk           = "5G" [90m-> null[0m[0m
+      [31m-[0m[0m image          = "22.04" [90m-> null[0m[0m
+      [31m-[0m[0m ipv4           = "10.244.209.203" [90m-> null[0m[0m
+      [31m-[0m[0m memory         = "1G" [90m-> null[0m[0m
+      [31m-[0m[0m name           = "kijanikiosk-api" [90m-> null[0m[0m
+    }
+
+[1m  # module.servers["logs"].multipass_instance.this[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "multipass_instance" "this" {
+      [31m-[0m[0m cloudinit_file = "./generated-cloud-init.yaml" [90m-> null[0m[0m
+      [31m-[0m[0m cpus           = 1 [90m-> null[0m[0m
+      [31m-[0m[0m disk           = "5G" [90m-> null[0m[0m
+      [31m-[0m[0m image          = "22.04" [90m-> null[0m[0m
+      [31m-[0m[0m ipv4           = "10.244.209.195" [90m-> null[0m[0m
+      [31m-[0m[0m memory         = "1G" [90m-> null[0m[0m
+      [31m-[0m[0m name           = "kijanikiosk-logs" [90m-> null[0m[0m
+    }
+
+[1m  # module.servers["payments"].multipass_instance.this[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "multipass_instance" "this" {
+      [31m-[0m[0m cloudinit_file = "./generated-cloud-init.yaml" [90m-> null[0m[0m
+      [31m-[0m[0m cpus           = 1 [90m-> null[0m[0m
+      [31m-[0m[0m disk           = "5G" [90m-> null[0m[0m
+      [31m-[0m[0m image          = "22.04" [90m-> null[0m[0m
+      [31m-[0m[0m ipv4           = "10.244.209.229" [90m-> null[0m[0m
+      [31m-[0m[0m memory         = "1G" [90m-> null[0m[0m
+      [31m-[0m[0m name           = "kijanikiosk-payments" [90m-> null[0m[0m
+    }
+
+[1mPlan:[0m [0m0 to add, 0 to change, 4 to destroy.
+
+Changes to Outputs:
+  [31m-[0m[0m server_names = {
+      [31m-[0m[0m api      = "kijanikiosk-api"
+      [31m-[0m[0m logs     = "kijanikiosk-logs"
+      [31m-[0m[0m payments = "kijanikiosk-payments"
+    } [90m-> null[0m[0m
+[0m[1m
+Do you really want to destroy all resources?[0m
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  [1mEnter a value:[0m [0m
+[0m[1mmodule.servers["api"].multipass_instance.this: Destroying... [name=kijanikiosk-api][0m[0m
+[0m[1mmodule.servers["logs"].multipass_instance.this: Destroying... [name=kijanikiosk-logs][0m[0m
+[0m[1mmodule.servers["payments"].multipass_instance.this: Destroying... [name=kijanikiosk-payments][0m[0m
+[0m[1mmodule.servers["logs"].multipass_instance.this: Destruction complete after 2s[0m
+[0m[1mmodule.servers["api"].multipass_instance.this: Destruction complete after 2s[0m
+[0m[1mmodule.servers["payments"].multipass_instance.this: Destruction complete after 3s[0m
+[0m[1mlocal_file.cloud_init: Destroying... [id=1604c5eca6f48d9bd5ec628b5dc3052406041f98][0m[0m
+[0m[1mlocal_file.cloud_init: Destruction complete after 0s[0m
+[0m[1m[32m
+Destroy complete! Resources: 4 destroyed.[0m

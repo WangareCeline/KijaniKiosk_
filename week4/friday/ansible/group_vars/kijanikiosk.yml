@@ -3,7 +3,7 @@
 # goes in host_vars/<name>.yml instead - never hardcode per-host values here.
 
 ansible_user: ubuntu
-ansible_ssh_private_key_file: "~/.ssh/{{ lookup('env', 'KIJANIKIOSK_KEY_NAME') | default('kijanikiosk-key', true) }}.pem"
+ansible_ssh_private_key_file: "~/.ssh/id_ed25519"
 ansible_python_interpreter: /usr/bin/python3
 
 kijanikiosk_base_dir: /opt/kijanikiosk

@@ -1,33 +1,31 @@
-variable "region" {
-  description = "AWS region to deploy into."
-  type        = string
-  default     = "eu-west-1"
+variable "cpus" {
+  description = "Number of vCPUs per server."
+  type        = number
+  default     = 1
 }
 
-variable "instance_type" {
-  description = "EC2 instance type used for all three KijaniKiosk servers."
+variable "memory" {
+  description = "Memory per server, e.g. '1G'."
   type        = string
-  default     = "t3.micro"
+  default     = "1G"
 }
 
-variable "key_name" {
-  description = "Name of the existing AWS key pair used for SSH access to all servers. Must exist in your AWS account already."
+variable "disk" {
+  description = "Disk space per server, e.g. '5G'."
   type        = string
+  default     = "5G"
 }
 
-variable "allowed_ssh_cidr" {
-  description = "CIDR block allowed to SSH into the servers. Should be your current IP with /32, not 0.0.0.0/0."
+variable "image" {
+  description = "Ubuntu image/release for all servers."
   type        = string
+  default     = "22.04"
 }
 
-variable "vpc_id" {
-  description = "VPC ID to launch the servers and security group into."
+variable "ssh_public_key_path" {
+  description = "Path to the operator's SSH public key, injected into each VM via cloud-init so Ansible can connect."
   type        = string
-}
-
-variable "subnet_id" {
-  description = "Subnet ID to launch the servers into."
-  type        = string
+  default     = "~/.ssh/id_ed25519.pub"
 }
 
 variable "servers" {

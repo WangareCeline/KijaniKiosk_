@@ -1,0 +1,169 @@
+==================================================================
+STEP 1: Terraform apply
+==================================================================
+[0m[1mlocal_file.cloud_init: Refreshing state... [id=1604c5eca6f48d9bd5ec628b5dc3052406041f98][0m
+[0m[1mmodule.servers["logs"].multipass_instance.this: Refreshing state... [name=kijanikiosk-logs][0m
+[0m[1mmodule.servers["api"].multipass_instance.this: Refreshing state... [name=kijanikiosk-api][0m
+[0m[1mmodule.servers["payments"].multipass_instance.this: Refreshing state... [name=kijanikiosk-payments][0m
+
+[0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
+
+[0mTerraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+[0m[1m[32m
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.[0m
+[0m[1m[32m
+Outputs:
+
+[0mserver_names = {
+  "api" = "kijanikiosk-api"
+  "logs" = "kijanikiosk-logs"
+  "payments" = "kijanikiosk-payments"
+}
+
+==================================================================
+STEP 2: Extract server IPs from Multipass and write Ansible inventory
+==================================================================
+Inventory written to /home/wangare/Documents/KijaniKiosk_/week4/friday/ansible/inventory.ini:
+[kijanikiosk]
+api      ansible_host=10.244.209.203
+payments ansible_host=10.244.209.229
+logs     ansible_host=10.244.209.195
+
+==================================================================
+STEP 3: Ansible playbook run
+==================================================================
+
+PLAY [Provision and harden KijaniKiosk servers] ********************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [payments]
+ok: [logs]
+ok: [api]
+
+TASK [Update apt cache] ********************************************************
+ok: [payments]
+ok: [api]
+ok: [logs]
+
+TASK [Install required packages] ***********************************************
+ok: [api]
+ok: [logs]
+ok: [payments]
+
+TASK [Create shared kijanikiosk group] *****************************************
+ok: [payments]
+ok: [api]
+ok: [logs]
+
+TASK [Create service system user] **********************************************
+ok: [payments]
+ok: [api]
+ok: [logs]
+
+TASK [Create base kijanikiosk directories] *************************************
+ok: [payments] => (item=/opt/kijanikiosk/kk-payments)
+ok: [api] => (item=/opt/kijanikiosk/kk-api)
+ok: [logs] => (item=/opt/kijanikiosk/kk-logs)
+ok: [payments] => (item=/opt/kijanikiosk/config)
+ok: [api] => (item=/opt/kijanikiosk/config)
+ok: [logs] => (item=/opt/kijanikiosk/config)
+ok: [api] => (item=/opt/kijanikiosk/health)
+ok: [payments] => (item=/opt/kijanikiosk/health)
+ok: [logs] => (item=/opt/kijanikiosk/health)
+
+TASK [Create shared logs directory] ********************************************
+ok: [api]
+ok: [logs]
+ok: [payments]
+
+TASK [Set default ACL on shared logs directory for service user] ***************
+ok: [logs]
+ok: [api]
+ok: [payments]
+
+TASK [Set default ACL on shared logs directory for kijanikiosk group] **********
+ok: [payments]
+ok: [api]
+ok: [logs]
+
+TASK [Deploy environment file] *************************************************
+ok: [logs]
+ok: [api]
+ok: [payments]
+
+TASK [Deploy systemd unit file] ************************************************
+ok: [api]
+ok: [payments]
+ok: [logs]
+
+TASK [Enable and start the service] ********************************************
+ok: [logs]
+ok: [payments]
+ok: [api]
+
+TASK [Set default deny incoming, allow outgoing] *******************************
+ok: [api] => (item={'direction': 'incoming', 'policy': 'deny'})
+ok: [payments] => (item={'direction': 'incoming', 'policy': 'deny'})
+ok: [logs] => (item={'direction': 'incoming', 'policy': 'deny'})
+ok: [payments] => (item={'direction': 'outgoing', 'policy': 'allow'})
+ok: [api] => (item={'direction': 'outgoing', 'policy': 'allow'})
+ok: [logs] => (item={'direction': 'outgoing', 'policy': 'allow'})
+
+TASK [Allow SSH] ***************************************************************
+ok: [logs]
+ok: [api]
+ok: [payments]
+
+TASK [Allow HTTP (nginx)] ******************************************************
+ok: [api]
+ok: [payments]
+ok: [logs]
+
+TASK [Allow monitoring subnet to reach kk-payments health check] ***************
+skipping: [api]
+skipping: [logs]
+ok: [payments]
+
+TASK [Allow loopback on kk-payments port for nginx's internal proxy] ***********
+skipping: [api]
+skipping: [logs]
+ok: [payments]
+
+TASK [Explicitly deny external access to kk-payments port] *********************
+skipping: [api]
+skipping: [logs]
+ok: [payments]
+
+TASK [Enable ufw] **************************************************************
+ok: [payments]
+ok: [api]
+ok: [logs]
+
+TASK [Ensure persistent journal directory exists] ******************************
+ok: [payments]
+ok: [api]
+ok: [logs]
+
+TASK [Set journald to persistent storage] **************************************
+ok: [api]
+ok: [logs]
+ok: [payments]
+
+TASK [Deploy logrotate config for this service] ********************************
+ok: [payments]
+ok: [api]
+ok: [logs]
+
+TASK [Verify logrotate config syntax (idempotency-safe, does not rotate)] ******
+ok: [payments]
+ok: [api]
+ok: [logs]
+
+PLAY RECAP *********************************************************************
+api                        : ok=20   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+logs                       : ok=20   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+payments                   : ok=23   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+Pipeline completed successfully.

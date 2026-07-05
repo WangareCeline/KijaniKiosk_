@@ -1,4 +1,5 @@
 {{ kijanikiosk_shared_logs_dir }}/*.log {
+    su {{ service_user }} {{ kijanikiosk_group }}
     daily
     rotate 7
     compress

@@ -3,9 +3,6 @@
 # Reset to a clean baseline first - your Week 3 audit found a spurious
 # leftover deny rule from a previous session, so a full reset avoids
 # that class of drift entirely rather than trying to patch around it.
-- name: Reset ufw to defaults
-  community.general.ufw:
-    state: reset
 
 - name: Set default deny incoming, allow outgoing
   community.general.ufw:

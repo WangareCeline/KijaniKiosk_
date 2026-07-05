@@ -1,16 +1,17 @@
-resource "aws_instance" "this" {
-  ami                    = var.ami_id
-  instance_type          = var.instance_type
-  key_name               = var.key_name
-  subnet_id              = var.subnet_id
-  vpc_security_group_ids = var.security_group_ids
+terraform {
+  required_providers {
+    multipass = {
+      source = "larstobi/multipass"
+    }
+  }
+}
 
-  tags = merge(
-    {
-      Name    = "kijanikiosk-${var.server_name}"
-      Project = "kijanikiosk"
-      Role    = var.server_name
-    },
-    var.tags
-  )
+resource "multipass_instance" "this" {
+  name   = "kijanikiosk-${var.server_name}"
+  cpus   = var.cpus
+  memory = var.memory
+  disk   = var.disk
+  image  = var.image
+
+  cloudinit_file = var.cloudinit_file
 }
