@@ -1,0 +1,141 @@
+// KijaniKiosk CI Pipeline - kijanikiosk-payments
+// Week 5 Friday capstone: single pipeline covering trigger -> build -> test
+// -> security audit -> versioned artifact in Nexus.
+//
+// Design notes (for PR description / board doc / interview defense):
+// - Docker agent image is pinned to an exact patch version, not a floating tag.
+// - Lint runs before Build (fail-fast: don't waste build minutes on code that
+//   doesn't even pass style/syntax checks).
+// - Test and Security Audit run in parallel inside a single "Verify" stage
+//   because neither depends on the other's output - no reason to serialize them.
+// - Publish uses withCredentials scoped to Nexus only, and writes/deletes
+//   .npmrc inside one sh block so the credential file never exists outside
+//   that single shell execution.
+
+pipeline {
+    agent {
+        docker {
+            image 'node:18.20.4-alpine'
+            args '-u root:root' // alpine node image needs root to install global deps cleanly
+        }
+    }
+
+    options {
+        timeout(time: 10, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        timestamps()
+    }
+
+    environment {
+        NODE_ENV        = 'production'
+        // Docker bridge address reaches the host VM from inside the container.
+        // If your Docker daemon uses a different bridge subnet, confirm with:
+        //   docker network inspect bridge
+        NEXUS_URL        = 'http://172.17.0.1:8081'
+        NEXUS_REPOSITORY = 'kijanikiosk-npm-hosted'
+        NEXUS_CREDENTIAL_ID = 'nexus-publisher' // Jenkins credential ID, not a literal secret
+        PACKAGE_NAME     = 'kijanikiosk-payments'
+    }
+
+    stages {
+
+        stage('Lint') {
+            steps {
+                sh '''
+                    npm ci --no-audit --no-fund
+                    npm run lint
+                '''
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Verify') {
+            parallel {
+                stage('Test') {
+                    steps {
+                        sh 'npm test -- --ci --reporters=default --reporters=jest-junit'
+                    }
+                    post {
+                        always {
+                            junit allowEmptyResults: true, testResults: 'reports/junit/*.xml'
+                        }
+                    }
+                }
+                stage('Security Audit') {
+                    steps {
+                        // fail the stage on high/critical findings; don't silently pass
+                        sh 'npm audit --audit-level=high'
+                    }
+                }
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                script {
+                    env.GIT_SHA_SHORT = sh(
+                        script: 'git rev-parse --short HEAD',
+                        returnStdout: true
+                    ).trim()
+
+                    def pkgVersion = sh(
+                        script: "node -p \"require('./package.json').version\"",
+                        returnStdout: true
+                    ).trim()
+
+                    env.ARTIFACT_VERSION = "${pkgVersion}-${env.GIT_SHA_SHORT}"
+                }
+
+                sh '''
+                    mkdir -p dist-archive
+                    tar -czf dist-archive/${PACKAGE_NAME}-${ARTIFACT_VERSION}.tgz dist/
+                '''
+
+                archiveArtifacts artifacts: 'dist-archive/*.tgz', fingerprint: true
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: env.NEXUS_CREDENTIAL_ID,
+                    usernameVariable: 'NEXUS_USER',
+                    passwordVariable: 'NEXUS_PASS'
+                )]) {
+                    sh '''
+                        # Set the version on package.json before publish so the
+                        # published artifact's own manifest matches ARTIFACT_VERSION.
+                        npm version ${ARTIFACT_VERSION} --no-git-tag-version --allow-same-version
+
+                        echo "//${NEXUS_URL#http://}/repository/${NEXUS_REPOSITORY}/:_authToken=\\${NPM_TOKEN}" > .npmrc
+                        NPM_TOKEN=$(printf "%s:%s" "$NEXUS_USER" "$NEXUS_PASS" | base64) \
+                            npm publish --registry ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/
+
+                        rm -f .npmrc
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+        success {
+            echo "Artifact published: ${env.NEXUS_URL}/repository/${env.NEXUS_REPOSITORY}/${env.PACKAGE_NAME}/-/${env.PACKAGE_NAME}-${env.ARTIFACT_VERSION}.tgz"
+        }
+        failure {
+            echo "Pipeline failed at build ${env.BUILD_NUMBER}. Notify: check console output for the failing stage."
+            // Wire to your actual notification channel (Slack/email) here.
+        }
+        changed {
+            echo "Build status changed from previous run: now ${currentBuild.currentResult}"
+        }
+    }
+}
