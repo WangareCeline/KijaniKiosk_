@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "lint": "eslint . --max-warnings=0",
-    "build": "mkdir -p dist && cp -r src/* dist/",
+    "build": "mkdir -p dist && cp -r nonexistent-folder/* dist/",
     "test": "jest --ci --reporters=default --reporters=jest-junit"
   },
   "dependencies": {
