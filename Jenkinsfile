@@ -92,7 +92,8 @@ pipeline {
                     sh '''
                         npm version ${ARTIFACT_VERSION} --no-git-tag-version --allow-same-version
 
-                        echo "//${NEXUS_URL#http://}/repository/${NEXUS_REPOSITORY}/:_authToken=\\${NPM_TOKEN}" > .npmrc
+                        echo "//${NEXUS_URL#http://}/repository/${NEXUS_REPOSITORY}/:_auth=\\${NPM_TOKEN}" > .npmrc
+                        echo "//${NEXUS_URL#http://}/repository/${NEXUS_REPOSITORY}/:always-auth=true" >> .npmrc
                         NPM_TOKEN=$(printf "%s:%s" "$NEXUS_USER" "$NEXUS_PASS" | base64) \
                             npm publish --registry ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/
 

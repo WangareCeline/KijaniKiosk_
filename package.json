@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "KijaniKiosk payments service - CI pipeline demo",
   "main": "src/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "lint": "eslint . --max-warnings=0",
     "build": "mkdir -p dist && cp -r src/* dist/",
