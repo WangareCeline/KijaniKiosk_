@@ -90,15 +90,16 @@ pipeline {
                     passwordVariable: 'NEXUS_PASS'
                 )]) {
                     sh '''
-                        npm version ${ARTIFACT_VERSION} --no-git-tag-version --allow-same-version
+                          npm version ${ARTIFACT_VERSION} --no-git-tag-version --allow-same-version
 
-                        echo "//${NEXUS_URL#http://}/repository/${NEXUS_REPOSITORY}/:_auth=\\${NPM_TOKEN}" > .npmrc
-                        echo "//${NEXUS_URL#http://}/repository/${NEXUS_REPOSITORY}/:always-auth=true" >> .npmrc
-                        NPM_TOKEN=$(printf "%s:%s" "$NEXUS_USER" "$NEXUS_PASS" | base64) \
-                            npm publish --registry ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/
+                          NPM_TOKEN=$(printf "%s:%s" "$NEXUS_USER" "$NEXUS_PASS" | base64 -w 0)
+                          echo "//${NEXUS_URL#http://}/repository/${NEXUS_REPOSITORY}/:_auth=${NPM_TOKEN}" > .npmrc
+                          echo "//${NEXUS_URL#http://}/repository/${NEXUS_REPOSITORY}/:always-auth=true" >> .npmrc
 
-                        rm -f .npmrc
-                    '''
+                          npm publish --registry ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/
+
+                          rm -f .npmrc
+                       '''
                 }
             }
         }
