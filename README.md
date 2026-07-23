@@ -94,3 +94,6 @@ One thing I'd improve with more time
 ------------------------------------
 
 The logrotate postrotate signal handling is the most fragile part. Right now it falls back to || true, which means a failed signal won't cause logrotate to error. In a real production environment, I'd remove that fallback and add a monitoring check that verifies the new log file is being written to within a few seconds after rotation. That way, we'd know immediately if logs were lost.
+
+## CI Pipeline
+Automated pipeline: lint, build, parallel test/security audit, archive, and publish to Nexus.
