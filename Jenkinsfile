@@ -19,7 +19,7 @@ pipeline {
     environment {
         NEXUS_URL        = 'http://172.17.0.1:8081'
         NEXUS_REPOSITORY = 'kijanikiosk-npm-hosted'
-        NEXUS_CREDENTIAL_ID = 'nexus-publisher-nonexistent'
+        NEXUS_CREDENTIAL_ID = 'nexus-publisher'
         PACKAGE_NAME     = 'kijanikiosk-payments'
     }
 
