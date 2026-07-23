@@ -1,3 +1,7 @@
+// KijaniKiosk CI Pipeline - kijanikiosk-payments
+// Week 5 Friday capstone: single pipeline covering trigger -> build -> test
+// -> security audit -> versioned artifact in Nexus.
+
 pipeline {
     agent {
         docker {
@@ -13,7 +17,6 @@ pipeline {
     }
 
     environment {
-        
         NEXUS_URL        = 'http://172.17.0.1:8081'
         NEXUS_REPOSITORY = 'kijanikiosk-npm-hosted'
         NEXUS_CREDENTIAL_ID = 'nexus-publisher'
@@ -21,6 +24,7 @@ pipeline {
     }
 
     stages {
+
         stage('Lint') {
             steps {
                 sh '''
@@ -59,10 +63,7 @@ pipeline {
         stage('Archive') {
             steps {
                 script {
-                    env.GIT_SHA_SHORT = sh(
-                        script: 'git rev-parse --short HEAD',
-                        returnStdout: true
-                    ).trim()
+                    env.GIT_SHA_SHORT = env.GIT_COMMIT.take(7)
 
                     def pkgVersion = sh(
                         script: "node -p \"require('./package.json').version\"",
@@ -116,4 +117,5 @@ pipeline {
             echo "Build status changed from previous run: now ${currentBuild.currentResult}"
         }
     }
-}
+} 
+
