@@ -75,7 +75,7 @@ pipeline {
 
                 sh '''
                     mkdir -p dist-archive
-                    tar -czf dist-archive/${PACKAGE_NAME}-${ARTIFACT_VERSION}.tgz nonexistent-dist/
+                    tar -czf dist-archive/${PACKAGE_NAME}-${ARTIFACT_VERSION}.tgz dist/
                 '''
 
                 archiveArtifacts artifacts: 'dist-archive/*.tgz', fingerprint: true
