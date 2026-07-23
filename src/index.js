@@ -14,5 +14,5 @@ function startServer(port = 3000) {
 if (require.main === module) {
   startServer();
 }
-
+const unusedVariable = 'this will trigger a lint error';
 module.exports = { app, startServer };
