@@ -1,0 +1,343 @@
+
+=== Version tag computation ===
+VERSION=1.4.0
+GITSHA=d9f5edc
+TAG=1.4.0-d9f5edc
+=== Push output ===
+The push refers to repository [ghcr.io/wangareceline/kk-payments]
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+a703797a5873: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+f18232174bc9: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+e14542c66e77: Waiting
+c2993f23ddad: Waiting
+8a0062fe5017: Waiting
+25ff2da83641: Waiting
+f18232174bc9: Waiting
+1e5a4c89cee5: Waiting
+6d7ecc5d56e3: Waiting
+552a68dcd261: Waiting
+90f05f1dd04a: Waiting
+dd71dde834b5: Waiting
+6d7ecc5d56e3: Waiting
+25ff2da83641: Pushed
+a703797a5873: Pushed
+c2993f23ddad: Pushed
+552a68dcd261: Pushed
+90f05f1dd04a: Pushed
+e14542c66e77: Pushed
+1e5a4c89cee5: Pushed
+8a0062fe5017: Pushed
+f18232174bc9: Pushed
+6d7ecc5d56e3: Pushed
+dd71dde834b5: Pushed
+1.4.0-d9f5edc: digest: sha256:3b8636e881747d3128cbe59ef218e0ed62674106f831260a7eeec34d93635b59 size: 856
+
+=== Delete-then-pull verification ===
+1.4.0-d9f5edc: Pulling from wangareceline/kk-payments
+90f05f1dd04a: Pulling fs layer
+e14542c66e77: Pulling fs layer
+a703797a5873: Pulling fs layer
+8a0062fe5017: Pulling fs layer
+6d7ecc5d56e3: Pulling fs layer
+552a68dcd261: Pulling fs layer
+8a0062fe5017: Already exists
+90f05f1dd04a: Already exists
+6d7ecc5d56e3: Already exists
+e14542c66e77: Already exists
+a703797a5873: Already exists
+552a68dcd261: Already exists
+552a68dcd261: Pull complete
+90f05f1dd04a: Pull complete
+a703797a5873: Pull complete
+6d7ecc5d56e3: Pull complete
+e14542c66e77: Pull complete
+8a0062fe5017: Pull complete
+c2993f23ddad: Download complete
+Digest: sha256:3b8636e881747d3128cbe59ef218e0ed62674106f831260a7eeec34d93635b59
+Status: Downloaded newer image for ghcr.io/wangareceline/kk-payments:1.4.0-d9f5edc
+ghcr.io/wangareceline/kk-payments:1.4.0-d9f5edc
+
+=== Credential audit ===
+Audit complete: no output above means no token found
