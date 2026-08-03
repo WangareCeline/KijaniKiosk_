@@ -1,0 +1,64 @@
+[MONITOR] Starting monitor. Confidence window: 60s, poll interval: 5s
+[MONITOR OK] 21:31:55 green healthy on port 3001
+[MONITOR OK] 21:32:01 green healthy on port 3001
+[MONITOR OK] 21:32:06 green healthy on port 3001
+[MONITOR OK] 21:32:11 green healthy on port 3001
+[MONITOR OK] 21:32:16 green healthy on port 3001
+[MONITOR OK] 21:32:21 green healthy on port 3001
+[MONITOR OK] 21:32:26 green healthy on port 3001
+[MONITOR OK] 21:32:31 green healthy on port 3001
+[MONITOR OK] 21:32:36 green healthy on port 3001
+[MONITOR OK] 21:32:41 green healthy on port 3001
+[MONITOR OK] 21:32:46 green healthy on port 3001
+[MONITOR OK] 21:32:51 green healthy on port 3001
+[MONITOR OK] 21:32:57 green healthy on port 3001
+[MONITOR OK] 21:33:02 green healthy on port 3001
+[MONITOR OK] 21:33:07 green healthy on port 3001
+[MONITOR OK] 21:33:12 green healthy on port 3001
+[MONITOR OK] 21:33:17 green healthy on port 3001
+[MONITOR OK] 21:33:22 green healthy on port 3001
+[MONITOR OK] 21:33:27 green healthy on port 3001
+[MONITOR OK] 21:33:32 green healthy on port 3001
+[MONITOR OK] 21:33:37 green healthy on port 3001
+[MONITOR OK] 21:33:42 green healthy on port 3001
+[MONITOR OK] 21:33:48 green healthy on port 3001
+[MONITOR OK] 21:33:53 green healthy on port 3001
+[MONITOR OK] 21:33:58 green healthy on port 3001
+[MONITOR OK] 21:34:03 green healthy on port 3001
+[MONITOR OK] 21:34:08 green healthy on port 3001
+[MONITOR OK] 21:34:13 green healthy on port 3001
+[MONITOR OK] 21:34:18 green healthy on port 3001
+[MONITOR OK] 21:34:23 green healthy on port 3001
+[MONITOR OK] 21:34:28 green healthy on port 3001
+[MONITOR OK] 21:34:33 green healthy on port 3001
+[MONITOR OK] 21:34:38 green healthy on port 3001
+[MONITOR OK] 21:34:44 green healthy on port 3001
+[MONITOR OK] 21:34:49 green healthy on port 3001
+[MONITOR OK] 21:34:54 green healthy on port 3001
+[MONITOR OK] 21:34:59 green healthy on port 3001
+[MONITOR OK] 21:35:04 green healthy on port 3001
+[MONITOR OK] 21:35:09 green healthy on port 3001
+[MONITOR OK] 21:35:14 green healthy on port 3001
+[MONITOR OK] 21:35:19 green healthy on port 3001
+[MONITOR OK] 21:35:24 green healthy on port 3001
+[MONITOR OK] 21:35:29 green healthy on port 3001
+[MONITOR OK] 21:35:34 green healthy on port 3001
+[MONITOR OK] 21:35:40 green healthy on port 3001
+[MONITOR OK] 21:35:45 green healthy on port 3001
+[MONITOR FAIL] 21:35:50 green health check failed (1/2)
+[MONITOR FAIL] 21:35:55 green health check failed (2/2)
+[MONITOR FAIL] ROLLBACK TRIGGERED: 21:35:55 rolling back from green to blue
+Switched from green to blue
+[MONITOR] Rollback complete: 21:35:55
+
+=== Rollback Test Evidence ===
+T0 (fault introduced): 21:35:47
+T1 (ROLLBACK TRIGGERED): 21:35:55
+T2 (rollback complete): 21:35:55
+Duration: 8 seconds
+
+--- Post-rollback proxy health ---
+{"status":"ok","version":"v1.3.0","timestamp":"2026-08-03T21:37:18.981Z"}
+--- Post-rollback state files ---
+active-env: blue
+previous-env: green
