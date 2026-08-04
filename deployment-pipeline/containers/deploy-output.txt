@@ -1,0 +1,12 @@
+=== Deployment status ===
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+kk-payments   2/2     2            2           2m27s
+
+=== Pods ===
+NAME                           READY   STATUS    RESTARTS   AGE
+kk-payments-84467d9785-m94nl   1/1     Running   0          2m27s
+kk-payments-84467d9785-s8n22   1/1     Running   0          2m27s
+
+=== ReplicaSet ===
+NAME                     DESIRED   CURRENT   READY   AGE
+kk-payments-84467d9785   2         2         2       2m27s
