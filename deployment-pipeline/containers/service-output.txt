@@ -1,0 +1,14 @@
+=== Service ===
+NAME                  TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kk-payments-service   NodePort   10.105.118.50   <none>        3001:30001/TCP   3m7s
+
+=== Endpoints ===
+NAME                  ENDPOINTS                         AGE
+kk-payments-service   10.244.0.8:3001,10.244.0.9:3001   3m7s
+
+=== External access via NodePort ===
+Node IP: 192.168.49.2
+{"status":"ok","version":"1.4.0-d9f5edc","service":"kijanikiosk-payments"}
+
+=== In-cluster DNS check ===
+{"status":"ok","version":"1.4.0-d9f5edc","service":"kijanikiosk-payments"}
