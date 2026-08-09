@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kk-payments
+  namespace: kijani-project
+spec:
+  type: ClusterIP
+  selector:
+    app: kk-payments
+  ports:
+    # port 3001 is what other services and the Ingress use to reach kk-payments.
+    # targetPort 80 matches the nginx:alpine stand-in's actual listening port.
+    # Revert targetPort to 3001 once the real kk-payments image is in use.
+    - port: 3001
+      targetPort: 80
