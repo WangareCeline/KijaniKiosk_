@@ -1,4 +1,4 @@
-# Production Readiness Assessment — kk-payments / kk-api
+# Production Readiness Assessment: kk-payments / kk-api
 
 ## External routing
 
