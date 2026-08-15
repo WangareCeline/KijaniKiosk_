@@ -1,0 +1,17 @@
+{
+  "name": "kk-payments",
+  "version": "1.4.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.30"
+  }
+}

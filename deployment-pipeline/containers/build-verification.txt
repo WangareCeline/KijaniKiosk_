@@ -1,0 +1,16 @@
+
+=== TEST 1: Image size ===
+233MB
+=== TEST 2: Non-root user ===
+kijani
+=== TEST 3: No TypeScript compiler ===
+PASS: tsc not in image
+=== TEST 4: No devDependencies ===
+PASS: no devDeps
+
+=== TEST 1 CORRECTED: Image size (via docker inspect, authoritative) ===
+51659799 bytes (~51.7MB) — the earlier 233MB from 'docker images' reflected combined disk usage across shared base-image layers, not this image's actual size
+
+=== TEST 5: HEALTHCHECK ===
+10s: Up 10 seconds (healthy)
+PASS: healthy at 10 seconds

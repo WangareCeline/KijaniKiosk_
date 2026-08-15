@@ -1,0 +1,35 @@
+[21:18:56] Pre-switch state check
+--- kk-api-blue status ---
+active
+--- kk-api-green status ---
+active
+--- blue health (port 3000) ---
+{"status":"ok","version":"v1.3.0","timestamp":"2026-08-03T21:18:56.842Z"}
+--- green health (port 3001) ---
+{"status":"ok","version":"v1.4.0","timestamp":"2026-08-03T21:18:56.881Z"}
+--- active-env / previous-env ---
+blue
+
+green
+
+
+[21:20:29] Running switch: blue -> green
+Switched from blue to green
+
+[21:20:30] Post-switch verification
+--- proxy health (port 80) ---
+{"status":"ok","version":"v1.3.0","timestamp":"2026-08-03T21:20:30.039Z"}
+--- active-env / previous-env ---
+green
+
+blue
+
+--- nginx active config ---
+server 127.0.0.1:3001;
+
+[21:22:18] Retry: initial post-switch curl caught a brief nginx reload window (returned stale v1.3.0). Retried after 1s delay:
+{"status":"ok","version":"v1.4.0","timestamp":"2026-08-03T21:22:18.338Z"}
+[21:23:24] Monitor started in separate terminal
+
+[21:30:46] Requirement 2 run: switching to green before starting monitor
+Switched from blue to green

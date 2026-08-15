@@ -1,0 +1,15 @@
+=== Self-Healing Test ===
+T0 (Pod deleted): 01:46:10 EAT (2026-08-03T22:46:10Z)
+Deleted Pod: kk-payments-84467d9785-m94nl
+Replacement Pod: kk-payments-84467d9785-ww6bb
+T1 (replacement Pod startTime): 2026-08-03T22:46:10Z
+Recovery time: near-instantaneous (same second) — Minikube reused the cached image, so no registry pull was needed for the replacement Pod
+
+--- Current Pods ---
+NAME                           READY   STATUS    RESTARTS        AGE
+kk-payments-84467d9785-s8n22   1/1     Running   1 (2m31s ago)   16h
+kk-payments-84467d9785-ww6bb   1/1     Running   1 (2m31s ago)   16h
+
+--- Deployment status ---
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+kk-payments   2/2     2            2           16h
