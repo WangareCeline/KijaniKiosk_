@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kk-payments-config
+  namespace: kijani-staging
+data:
+  DB_HOST: staging-db.kijanikiosk.internal
