@@ -108,6 +108,9 @@ pipeline {
             steps {
                 withEnv(['KUBECONFIG=/var/jenkins_home/.kube/config']) {
                     sh '''
+                        which kubectl || (apk add --no-cache curl && \\
+                          curl -LO https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl && \\
+                          chmod +x kubectl && mv kubectl /usr/local/bin/)
                         kubectl set image deployment/kk-payments \\
                           kk-payments=ghcr.io/wangareceline/kk-payments:${ARTIFACT_VERSION} \\
                           -n kijani-staging --record || \\
