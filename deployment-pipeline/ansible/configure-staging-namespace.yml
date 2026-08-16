@@ -1,0 +1,18 @@
+---
+- name: Configure kijani-staging namespace
+  hosts: localhost
+  connection: local
+  collections:
+    - kubernetes.core
+
+  tasks:
+    - name: Label namespace as ansible-managed
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: kijani-staging
+        state: patched
+        definition:
+          metadata:
+            labels:
+              managed-by: ansible
