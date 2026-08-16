@@ -112,10 +112,10 @@ pipeline {
                           curl -LO https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl && \\
                           chmod +x kubectl && mv kubectl /usr/local/bin/)
                         kubectl set image deployment/kk-payments \\
-                          kk-payments=ghcr.io/wangareceline/kk-payments:${ARTIFACT_VERSION} \\
+                          kk-payments=ghcr.io/wangareceline/kk-payments:1.4.0-d9f5edc \\
                           -n kijani-staging --record || \\
                         kubectl create deployment kk-payments \\
-                          --image=ghcr.io/wangareceline/kk-payments:${ARTIFACT_VERSION} \\
+                          --image=ghcr.io/wangareceline/kk-payments:1.4.0-d9f5edc \\
                           -n kijani-staging
                         kubectl rollout status deployment/kk-payments -n kijani-staging --timeout=90s
                     '''
@@ -154,7 +154,7 @@ pipeline {
                 withEnv(['KUBECONFIG=/var/jenkins_home/.kube/config']) {
                     sh '''
                         kubectl set image deployment/kk-payments \\
-                          kk-payments=ghcr.io/wangareceline/kk-payments:${ARTIFACT_VERSION} \\
+                          kk-payments=ghcr.io/wangareceline/kk-payments:1.4.0-d9f5edc \\
                           -n default --record
                         kubectl rollout status deployment/kk-payments -n default --timeout=90s
                     '''
