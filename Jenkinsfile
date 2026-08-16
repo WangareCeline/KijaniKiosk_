@@ -6,7 +6,7 @@ pipeline {
     agent {
         docker {
             image 'node:18.20.4-alpine'
-            args '-u root:root'
+            args '-u root:root --network=minikube'
         }
     }
 
