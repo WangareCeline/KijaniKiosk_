@@ -26,6 +26,9 @@ spec:
           value: "3001"
         - name: VERSION
           value: "1.4.0-d9f5edc"
+        envFrom:
+        - configMapRef:
+            name: kk-payments-config
         resources:
           requests:
             cpu: "100m"
