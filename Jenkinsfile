@@ -103,6 +103,61 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Staging') {
+            steps {
+                withEnv(['KUBECONFIG=/var/jenkins_home/.kube/config']) {
+                    sh '''
+                        kubectl set image deployment/kk-payments \\
+                          kk-payments=ghcr.io/wangareceline/kk-payments:${ARTIFACT_VERSION} \\
+                          -n kijani-staging --record || \\
+                        kubectl create deployment kk-payments \\
+                          --image=ghcr.io/wangareceline/kk-payments:${ARTIFACT_VERSION} \\
+                          -n kijani-staging
+                        kubectl rollout status deployment/kk-payments -n kijani-staging --timeout=90s
+                    '''
+                }
+            }
+        }
+
+        stage('Smoke Test') {
+            steps {
+                withEnv(['KUBECONFIG=/var/jenkins_home/.kube/config']) {
+                    sh '''
+                        kubectl port-forward -n kijani-staging deployment/kk-payments 3099:3001 &
+                        PF_PID=$!
+                        sleep 5
+                        RESPONSE=$(curl -sf http://localhost:3099/health)
+                        kill $PF_PID
+                        echo "Smoke test response: $RESPONSE"
+                        echo "$RESPONSE" | grep -q '"status":"ok"'
+                    '''
+                }
+            }
+        }
+
+        stage('Approval Gate') {
+            steps {
+                timeout(time: 15, unit: 'MINUTES') {
+                    input message: 'Smoke test passed. Approve deployment to production?',
+                          submitter: 'admin',
+                          parameters: [string(name: 'APPROVAL_REASON', description: 'Why is this approved?')]
+                }
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                withEnv(['KUBECONFIG=/var/jenkins_home/.kube/config']) {
+                    sh '''
+                        kubectl set image deployment/kk-payments \\
+                          kk-payments=ghcr.io/wangareceline/kk-payments:${ARTIFACT_VERSION} \\
+                          -n default --record
+                        kubectl rollout status deployment/kk-payments -n default --timeout=90s
+                    '''
+                }
+            }
+        }
     }
 
     post {
