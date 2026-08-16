@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: kk-payments-alerts
+  namespace: monitoring
+  labels:
+    release: prometheus
+spec:
+  groups:
+  - name: kk-payments.rules
+    rules:
+    - alert: KkPaymentsHighRestartRate
+      expr: increase(kube_pod_container_status_restarts_total{namespace=~"default|kijani-staging", pod=~"kk-payments.*"}[15m]) > 2
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "kk-payments pod restarting frequently"
+        description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted more than 2 times in the last 15 minutes."
