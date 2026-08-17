@@ -1,0 +1,16 @@
+CAPSTONE REFLECTION 
+
+1. What did you get wrong?
+During the initial architecture planning, I chose to maintain separate, decoupled setups for the Jenkins CI/CD pipeline (PR #3) and the Kubernetes deployment logic (PR #4), intending to keep CI automation and CD orchestration cleanly isolated. This turned out to be a flawed decision. In practice, isolating the environment-specific Kubernetes deployments from the Jenkins pipeline created significant friction, requiring manual interventions between build and deployment stages and breaking end-to-end automation.
+
+2. What is the most important thing you learned?
+Infrastructure as Code (IaC) with Declarative Configuration Management.
+
+I previously viewed infrastructure setup and environment maintenance as distinct, manual operational steps that occurred outside of the application delivery lifecycle. Learning to manage infrastructure declaratively: treating servers, networking, and deployment environments with the same version control, testing, and pipeline rigor as application code—shifted my mindset from seeing deployment as a fragile, post-build event to viewing it as a deterministic, reproducible, and fully automated process.
+
+3. What would a second pass look like?
+Given two additional weeks with the existing codebase and infrastructure as a foundation, I would focus on three specific enhancements:
+
+- Add: A GitOps tool controller (such as ArgoCD or Flux) integrated directly into the Kubernetes cluster to manage application state drift automatically, replacing direct pipeline-to-cluster kubectl applying with true declarative GitOps continuous delivery.
+- Remove: The legacy local Multipass VM environment provisioning scripts, replacing them entirely with standardized Terraform modules targeting managed cloud infrastructure (such as AWS EKS or Azure AKS).
+- Change: Upgrade the basic serverless receipt chain integration (kk-payments writing to kk-payments-receipts-staging) into a fully decoupled, event-driven architecture using an asynchronous message broker (like Apache Kafka or AWS SQS) to guarantee receipt delivery resiliently under high-concurrency traffic spikes.
